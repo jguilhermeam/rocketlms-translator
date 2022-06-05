@@ -1,9 +1,12 @@
 from translate import Translator
 import os
 
-translator= Translator(to_lang="pt")
-diretorio_entrada = 'en'
-diretorio_saida = 'pt-br'
+lang = input("Enter language code that you want to translate to: ")
+translator = Translator(to_lang=lang)
+
+
+diretorio_entrada = input("Enter source directory: ")
+diretorio_saida = input("Enter destination directory (to be created): ")
 
 for r, d, f in os.walk(diretorio_entrada):
     root = r.replace(diretorio_entrada,"")
