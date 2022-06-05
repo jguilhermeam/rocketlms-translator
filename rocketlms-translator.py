@@ -5,24 +5,24 @@ lang = input("Enter language code that you want to translate to: ")
 translator = Translator(to_lang=lang)
 
 
-diretorio_entrada = input("Enter source directory: ")
-diretorio_saida = input("Enter destination directory (to be created): ")
+source_dir = input("Enter source directory: ")
+dest_dir = input("Enter destination directory (to be created): ")
 
-for r, d, f in os.walk(diretorio_entrada):
-    root = r.replace(diretorio_entrada,"")
-    print('creating directory '+diretorio_saida+root)
-    if not os.path.exists(diretorio_saida+root):
-        os.mkdir(diretorio_saida+root)
+for r, d, f in os.walk(source_dir):
+    root = r.replace(source_dir,"")
+    print('creating directory '+dest_dir+root)
+    if not os.path.exists(dest_dir+root):
+        os.mkdir(dest_dir+root)
     for file in f:
         print('translating file '+file)
         with open(r+'/'+file,'r') as f1:
-            with open(diretorio_saida+root+'/'+file,'w') as f2:
+            with open(dest_dir+root+'/'+file,'w') as f2:
                 for line in f1:
                     parts = line.split('=>')
                     if len(parts) > 1:
                         phrase = parts[1].strip().replace("'","")[0:-1]
-                        #traduzida = translator.translate(phrase)
-                        #print(traduzida)
-                        #line.replace(phrase,traduzida)
+                        #translated = translator.translate(phrase)
+                        #print(translated)
+                        #line.replace(phrase,translated)
                     f2.write(line)
 
