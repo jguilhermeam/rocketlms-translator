@@ -1,14 +1,32 @@
-from translate import Translator
-import os
+import requests, uuid, json, os
+
+def translate(src_text,lang):
+    subscription_key = ""
+    location = ""
+    endpoint = "https://api.cognitive.microsofttranslator.com/translate"
+
+    params = {
+        'api-version': '3.0',
+        'to': lang
+    }
+
+    headers = {
+        'Ocp-Apim-Subscription-Key': subscription_key,
+        'Ocp-Apim-Subscription-Region': location,
+        'Content-type': 'application/json',
+        'X-ClientTraceId': str(uuid.uuid4())
+    }
+
+    body = [{ 'text': src_text }]
+
+    request = requests.post(endpoint, params=params, headers=headers, json=body)
+    response = request.json()
+    return response[0]['translations'][0]['text']
 
 
 debug = input("Translate api has a limit for a period, so this script will run in debug mode unless you type 'y': ")
 
-email = input("Insert a valid email to get 50000 chars/day quota: ")
-
 lang = input("Enter language code that you want to translate to: ")
-translator = Translator(to_lang=lang,email=email)
-
 
 source_dir = input("Enter source directory: ")
 dest_dir = input("Enter destination directory (to be created): ")
@@ -27,10 +45,9 @@ for r, d, f in os.walk(source_dir):
                     if len(parts) > 1:
                         phrase = parts[1].strip().replace("'","").replace("\"","")[0:-1]
                         if debug.lower() == 'y':
-                            translated = translator.translate(phrase)
+                            translated = translate(phrase,lang)
                             #print(phrase+" --> "+translated)
                             aux = line.replace(phrase,translated)
                     else:
                         aux = line
                     f2.write(aux)
-
