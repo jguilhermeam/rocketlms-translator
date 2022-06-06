@@ -48,6 +48,8 @@ for r, d, f in os.walk(source_dir):
                             translated = translate(phrase,lang)
                             #print(phrase+" --> "+translated)
                             aux = line.replace(phrase,translated)
+                        else:
+                            aux = 'TRANSLATE WILL BE HERE'
                     else:
                         aux = line
                     f2.write(aux)
