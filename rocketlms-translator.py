@@ -21,11 +21,14 @@ for r, d, f in os.walk(source_dir):
         with open(r+'/'+file,'r') as f1:
             with open(dest_dir+root+'/'+file,'w') as f2:
                 for line in f1:
-                    parts = line.split('=>')
+                    parts = line.split("=>")
                     if len(parts) > 1:
-                        phrase = parts[1].strip().replace("'","")[0:-1]
+                        phrase = parts[1].strip().replace("'","").replace("\"","")[0:-1]
                         if debug.lower() == 'y':
                             translated = translator.translate(phrase)
-                            line.replace(phrase,translated)
-                    f2.write(line)
+                            #print(phrase+" --> "+translated)
+                            aux = line.replace(phrase,translated)
+                    else:
+                        aux = line
+                    f2.write(aux)
 
