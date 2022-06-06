@@ -1,6 +1,9 @@
 from translate import Translator
 import os
 
+
+debug = input("Translate api has a limit for a period, so this script will run in debug mode unless you type 'y': ")
+
 lang = input("Enter language code that you want to translate to: ")
 translator = Translator(to_lang=lang)
 
@@ -21,8 +24,8 @@ for r, d, f in os.walk(source_dir):
                     parts = line.split('=>')
                     if len(parts) > 1:
                         phrase = parts[1].strip().replace("'","")[0:-1]
-                        #translated = translator.translate(phrase)
-                        #print(translated)
-                        #line.replace(phrase,translated)
+                        if debug.lower() == 'y':
+                            translated = translator.translate(phrase)
+                            line.replace(phrase,translated)
                     f2.write(line)
 
