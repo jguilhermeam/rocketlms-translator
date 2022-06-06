@@ -4,8 +4,10 @@ import os
 
 debug = input("Translate api has a limit for a period, so this script will run in debug mode unless you type 'y': ")
 
+email = input("Insert a valid email to get 50000 chars/day quota: ")
+
 lang = input("Enter language code that you want to translate to: ")
-translator = Translator(to_lang=lang)
+translator = Translator(to_lang=lang,email=email)
 
 
 source_dir = input("Enter source directory: ")
